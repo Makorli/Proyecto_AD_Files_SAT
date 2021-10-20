@@ -1,7 +1,10 @@
 package com.company.Main;
 
+import com.company.Miscelaneous.Utils;
 import com.company.Modelos.*;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,7 +27,12 @@ public class Generador {
 
         public static void main(String[] args) {
 
-            int nIncidenciasNuevas = (Integer.parseInt(args[1]));
+            int nIncidenciasNuevas;
+
+            if (args.length == 0){
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                nIncidenciasNuevas =10;
+            } else nIncidenciasNuevas= (Integer.parseInt(args[0]));
 
             //COMPROBAMOS QUE TENEMOS LOS DATOS NECESARIOS PARA GENERAR LAS INCIDENCIAS ALEATORIAMENTE
             //SI NO LOS TENEMOS EN MEMORIA LO CARGAMOS DE LOS FICHEROS Y SI NO HAY DATOS DEVOLVEMOS ERROR
@@ -52,6 +60,8 @@ public class Generador {
                 int incIdxSel;
                 int areaIdxSel;
 
+                System.out.format("\nReportando nuevas %d incidencias\n",nIncidenciasNuevas);
+
                 for (int i = 0; i < nIncidenciasNuevas; i++) {
                     incIdxSel = rnd.nextInt(TiposDeIncidencias.getLista().size()); //Tipo de incidencia
                     areaIdxSel = rnd.nextInt(AreasEmpresa.getLista().size()); // Area de que registra la incidencia.
@@ -64,7 +74,7 @@ public class Generador {
                     );
 
                     //Mostramos la Incidencia en pantalla
-                    System.out.format("Incidencia: %s\nArea: %s",
+                    System.out.format("Incidencia: %-30s\tArea: %s\n",
                             nuevaIncidencia.getDescripcion(),
                             nuevaIncidencia.getArea());
 
@@ -91,7 +101,12 @@ public class Generador {
         //Generador aleatorio de trabajos y atencion de incidencias abiertas.
         public static void main (String[] args) {
 
-            int nTrabajos = (Integer.parseInt(args[1]));
+            int nTrabajos;
+
+            if (args.length == 0){
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                nTrabajos =10;
+            } else nTrabajos= (Integer.parseInt(args[0]));
 
             //COMPROBAMOS QUE TENEMOS LOS DATOS NECESARIOS PARA ATENDER LAS INCIDENCIAS ALEATORIAMENTE
             //SI NO LOS TENEMOS EN MEMORIA LO CARGAMOS DE LOS FICHEROS Y SI NO HAY DATOS DEVOLVEMOS ERROR
@@ -119,9 +134,11 @@ public class Generador {
 
             if (check1Ok && check2Ok) {
                 Random rnd = new Random(); //generador de aleatorios
-                int maxHoras =8;
-                int incSelIdx;
-                int tecSelIdx;
+                int maxHoras =4; //el maximo de horas que un técnico puede dedicar a una incidencia en un día
+                int incSelIdx;  //Id de incidencia aleatoria
+                int tecSelIdx;  //Id de tecnico aleatorio
+
+                System.out.format("\nAtendiendo %d incidencias\n",nTrabajos);
 
                 for (int i = 0; i < nTrabajos; i++) {
 
@@ -148,7 +165,7 @@ public class Generador {
                     );
 
                     //Mostramos el trabajo en pantalla
-                    System.out.format("Incidencia: %s\nTecnico: %s\nHoras: %d\n",
+                    System.out.format("%s\n\tTecnico: %s\n\tHoras: %d\n",
                             incidenciaSel,
                             tecnicoSel,
                             horas);
@@ -160,11 +177,14 @@ public class Generador {
                     //Preguntamos si el tecnico a terminado la incidencia y
                     // si esta resuelta actualizamos la incidencia y
                     //la añadimos a la lista de incidencias cerradas
-                    incidenciaSel.setResuelta(rnd.nextBoolean());
+                    boolean resuelta = rnd.nextBoolean();
+
 
                     if (incidenciaSel.isResuelta())
                         //actualizamos la incidencia
+                        incidenciaSel.setResuelta(resuelta);
                         incidenciasCerradas.add(incidenciaSel);
+
                 }
 
                 //FIN DE LOS TRABAJOS
@@ -176,13 +196,12 @@ public class Generador {
                 }
                 EscribirFicheros_OOS.FicheroTrabajos();
 
-                //Actualizamos las incidencias cerradas y grabamos el fichero
-                for(Incidencia i: incidenciasCerradas){
-                    IncidenciasReportadas.getMap().put(i.getId(),i);
+                //Si se han cerrado incidencias cerradas actualizamos el fichero
+                if (incidenciasCerradas.size()>0) {
+                    EscribirFicheros_OOS.FicheroIncidencias();
                 }
-                EscribirFicheros_OOS.FicheroIncidencias();
 
-            } else System.out.println("Imposible generar nuevas incidencias, problemas con los ficheros.");
+            } else System.out.println("Imposible atender incidencias, problemas con los ficheros.");
 
         }
 

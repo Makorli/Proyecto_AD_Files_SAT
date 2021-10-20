@@ -8,10 +8,19 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        new DepartamentoTecnico();
-        new IncidenciasReportadas();
-        new AreasEmpresa();
+      //  new DepartamentoTecnico();
+     //   new IncidenciasReportadas();
+     //   new AreasEmpresa();
+      // new TiposDeIncidencias();
+     //   new AreasEmpresa();
 
-        EscribirFicheros_OOS.main(null);
+
+      //  EscribirFicheros_OOS.main(null);
+      //  EscribirFicheros_OOS.FicheroTipoIncidencias();
+      //  EscribirFicheros_OOS.FicheroAreas();
+        Generador.NuevasIncidencias(10);
+        Generador.AtenderIncidencias(2);
+       // EscribirFicheros_OOS.FicheroTecnicos();
+      //  EscribirFicheros_OOS.FicheroTipoIncidencias();
     }
 }

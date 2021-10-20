@@ -22,7 +22,9 @@ public class EscribirFicheros_OOS {
     public static void FicheroIncidencias(){
         EscribirFicheros_OOS.FicheroIncidencias.main(null);
     }
-    public static void FicheroTrabajos(){ EscribirFicheros_OOS.FicheroTrabajos.main(null); }
+    public static void FicheroTrabajos(){
+        EscribirFicheros_OOS.FicheroTrabajos.main(null);
+    }
     public static void FicheroTipoIncidencias(){
         EscribirFicheros_OOS.FicheroTipoIncidencias.main(null);
     }
@@ -53,7 +55,7 @@ public class EscribirFicheros_OOS {
                 objectOutputStream.close();
 
             } catch (FileNotFoundException f) {
-                System.out.format("Fichero %s no encontrado\n", nombrefichero);
+                System.out.format("Creando fichero no encontrado: %s\n", nombrefichero);
             } catch (IOException io) {
                 System.out.format("Error E/S en %s\n", nombrefichero);
             }
@@ -84,7 +86,7 @@ public class EscribirFicheros_OOS {
                 objectOutputStream.close();
 
             } catch (FileNotFoundException f) {
-                System.out.format("Fichero %s no encontrado\n", nombrefichero);
+                System.out.format("Creando fichero no encontrado: %s\n", nombrefichero);
             } catch (IOException io) {
                 System.out.format("Error E/S en %s\n", nombrefichero);
             }
@@ -114,7 +116,7 @@ public class EscribirFicheros_OOS {
                 objectOutputStream.close();
 
             } catch (FileNotFoundException f) {
-                System.out.format("Fichero %s no encontrado\n", nombrefichero);
+                System.out.format("Creando fichero no encontrado: %s\n", nombrefichero);
             } catch (IOException io) {
                 System.out.format("Error E/S en %s\n", nombrefichero);
             }
@@ -144,7 +146,7 @@ public class EscribirFicheros_OOS {
                 objectOutputStream.close();
 
             } catch (FileNotFoundException f) {
-                System.out.format("Fichero %s no encontrado\n", nombrefichero);
+                System.out.format("Creando fichero no encontrado: %s\n", nombrefichero);
             } catch (IOException io) {
                 System.out.format("Error E/S en %s\n", nombrefichero);
             }
@@ -174,7 +176,7 @@ public class EscribirFicheros_OOS {
                 objectOutputStream.close();
 
             } catch (FileNotFoundException f) {
-                System.out.format("Fichero %s no encontrado\n", nombrefichero);
+                System.out.format("Creando fichero no encontrado: %s\n", nombrefichero);
             } catch (IOException io) {
                 System.out.format("Error E/S en %s\n", nombrefichero);
             }

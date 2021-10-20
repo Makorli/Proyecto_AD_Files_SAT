@@ -9,9 +9,19 @@ import java.util.List;
 public class TiposDeIncidencias {
 
     //Lista de Tipos de incidencia el indice de la tabla actua como ID de la misma
-    private static final List<String> tiposdeincidencialist = new ArrayList<>(){};
+    private static final List<String> tiposdeincidencialist = new ArrayList<>();
 
     public TiposDeIncidencias() {
+
+        tiposdeincidencialist.add("Problema Hardware");
+        tiposdeincidencialist.add("Error de acceso");
+        tiposdeincidencialist.add("Problema de SW");
+        tiposdeincidencialist.add("Error página Web");
+        tiposdeincidencialist.add("Error certificados");
+        tiposdeincidencialist.add("Fallo metodología");
+        tiposdeincidencialist.add("Problema red");
+        tiposdeincidencialist.add("Usuario problematico");
+
     }
 
     public static void add(String inc) {

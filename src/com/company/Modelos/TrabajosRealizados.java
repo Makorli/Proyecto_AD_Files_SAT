@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TrabajosRealizados {
 
-    private static final List<Trabajo> trabajoList = new ArrayList<>() {};
+    private static final List<Trabajo> trabajoList = new ArrayList<>();
 
     public TrabajosRealizados() {
         /*

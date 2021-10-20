@@ -36,7 +36,6 @@ public class CargarFicheros_OOS {
 
         private static final String nombrefichero = "src/com/company/Data/Areas.dat";
         private static final Map<Integer, Area> objectMap = AreasEmpresa.getMap();
-        private static final List<Area> listaDeCarga= AreasEmpresa.getLista();
 
         public static void main(String[] args) {
             //GENERAMOS EL FLUJO DE DATOS PARA LECTURA DEL FICHERO
@@ -52,16 +51,17 @@ public class CargarFicheros_OOS {
                     while (true){
                         if (primeravez){
                             objectMap.clear();
-                            listaDeCarga.clear();
+                            primeravez=false;
                         }
                         a = (Area) objectInputStream.readObject();
                         if (!objectMap.containsKey(a.getId())){
                             objectMap.put(a.getId(),a);
-                            listaDeCarga.add(a);
                         }
                     }
                 }
-                catch(EOFException e){  }  //Salimos del bucle de lectura.
+                catch(EOFException e){
+                    System.out.format("Fin de carga fichero %s\n",nombrefichero);
+                }  //Salimos del bucle de lectura.
                 catch (ClassNotFoundException e) {
                     System.out.println("Clase almacenada incorrecta");
                 }
@@ -84,7 +84,6 @@ public class CargarFicheros_OOS {
 
         private static final String nombrefichero = "src/com/company/Data/Tecnicos.dat";
         private static final Map<Integer, Tecnico> objectMap = DepartamentoTecnico.getMap();
-        private static final List<Tecnico> listaDeCarga= DepartamentoTecnico.getLista();
 
         public static void main(String[] args) {
             //GENERAMOS EL FLUJO DE DATOS PARA LECTURA DEL FICHERO
@@ -100,16 +99,17 @@ public class CargarFicheros_OOS {
                     while (true){
                         if (primeravez){
                             objectMap.clear();
-                            listaDeCarga.clear();
+                            primeravez=false;
                         }
                         a = (Tecnico) objectInputStream.readObject();
                         if (!objectMap.containsKey(a.getId())){
                             objectMap.put(a.getId(),a);
-                            listaDeCarga.add(a);
                         }
                     }
                 }
-                catch(EOFException e){  }  //Salimos del bucle de lectura.
+                catch(EOFException e){
+                    System.out.format("Fin de carga fichero %s\n",nombrefichero);
+                }  //Salimos del bucle de lectura.
                 catch (ClassNotFoundException e) {
                     System.out.println("Clase almacenada incorrecta");
                 }
@@ -132,7 +132,6 @@ public class CargarFicheros_OOS {
 
         private static final String nombrefichero = "src/com/company/Data/Incidencias.dat";
         private static final Map<Integer,Incidencia> objectMap = IncidenciasReportadas.getMap();
-        private static final List<Incidencia> listaDeCarga= IncidenciasReportadas.getLista();
 
         public static void main(String[] args) {
             //GENERAMOS EL FLUJO DE DATOS PARA LECTURA DEL FICHERO
@@ -148,16 +147,18 @@ public class CargarFicheros_OOS {
                     while (true){
                         if (primeravez){
                             objectMap.clear();
-                            listaDeCarga.clear();
+                            //listaDeCarga.clear();
+                            primeravez=false;
                         }
                         a = (Incidencia) objectInputStream.readObject();
                         if (!objectMap.containsKey(a.getId())){
                             objectMap.put(a.getId(),a);
-                            listaDeCarga.add(a);
                         }
                     }
                 }
-                catch(EOFException e){  }  //Salimos del bucle de lectura.
+                catch(EOFException e){
+                    System.out.format("Fin de carga fichero %s\n",nombrefichero);
+                }  //Salimos del bucle de lectura.
                 catch (ClassNotFoundException e) {
                     System.out.println("Clase almacenada incorrecta");
                 }
@@ -218,7 +219,7 @@ public class CargarFicheros_OOS {
     private static class FicheroTipoIncidencias {
 
         private static final String nombrefichero = "src/com/company/Data/TiposDeIncidencia.dat";
-        private static final List<String> listaDeCarga= TiposDeIncidencias.getLista();
+        private static final List<String> listaDeCarga= new TiposDeIncidencias().getLista();
 
         public static void main(String[] args) {
             //GENERAMOS EL FLUJO DE DATOS PARA LECTURA DEL FICHERO
@@ -235,7 +236,9 @@ public class CargarFicheros_OOS {
                         listaDeCarga.add(a);
                     }
                 }
-                catch(EOFException e){  }  //Salimos del bucle de lectura.
+                catch(EOFException e){
+                    System.out.format("Fin de carga fichero %s\n",nombrefichero);
+                }  //Salimos del bucle de lectura.
                 catch (ClassNotFoundException e) {
                     System.out.println("Clase almacenada incorrecta");
                 }

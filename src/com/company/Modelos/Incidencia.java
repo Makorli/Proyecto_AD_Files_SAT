@@ -15,7 +15,7 @@ public class Incidencia implements Serializable {
 
     //ATRIBUTOS
     private int id;   //Id de la incidencia
-    private String descripcion; //Descripcion de la incidencia (100 caracteres)
+    private String descripcion; //Tipo de la incidencia (100 caracteres)
     private String area;        //Area que registra la incidencia (15 caracteres)
     private boolean resuelta;   //Indica si la incidencia está resuelta o no
 
@@ -25,7 +25,7 @@ public class Incidencia implements Serializable {
 
     public Incidencia(int id, String descripcion, String area) {
         this.id = id;
-        setDescripcion(descripcion);
+        setDescripcion(descripcion); //Tipo de Incidencia
         setArea(area);
         this.resuelta = false;
     }

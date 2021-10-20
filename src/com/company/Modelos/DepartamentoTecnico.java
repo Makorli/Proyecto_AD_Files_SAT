@@ -4,7 +4,6 @@ import java.util.*;
 
 public class DepartamentoTecnico {
 
-    private static final List<Tecnico> tecnicoslista = new ArrayList<>();
     private static final Map<Integer, Tecnico> tecnicoMap = new HashMap<>();
 
     public DepartamentoTecnico() {
@@ -23,8 +22,7 @@ public class DepartamentoTecnico {
         tecnicoMap.put(t5.getId(),t5);
         tecnicoMap.put(t6.getId(),t6);
         tecnicoMap.put(t7.getId(),t7);
- */
-        tecnicoslista.addAll(tecnicoMap.values());
+*/
     }
 
     public static void add(Tecnico obj) {
