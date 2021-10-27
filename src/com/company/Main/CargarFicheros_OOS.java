@@ -261,4 +261,12 @@ public class CargarFicheros_OOS {
         FicheroTrabajos();
         FicheroTipoIncidencias();
     }
+
+    public static void cargarTodosLosFicheros(){
+        FicheroAreas();
+        FicheroTecnicos();
+        FicheroIncidencias();
+        FicheroTrabajos();
+        FicheroTipoIncidencias();
+    }
 }

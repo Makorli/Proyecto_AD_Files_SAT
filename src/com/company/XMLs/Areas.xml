@@ -1,0 +1,30 @@
+<list>
+  <Area>
+    <id>1</id>
+    <nombreArea>Ingeniería</nombreArea>
+  </Area>
+  <Area>
+    <id>2</id>
+    <nombreArea>Taller</nombreArea>
+  </Area>
+  <Area>
+    <id>3</id>
+    <nombreArea>Compras</nombreArea>
+  </Area>
+  <Area>
+    <id>4</id>
+    <nombreArea>RRHH</nombreArea>
+  </Area>
+  <Area>
+    <id>5</id>
+    <nombreArea>Administración</nombreArea>
+  </Area>
+  <Area>
+    <id>6</id>
+    <nombreArea>TICS</nombreArea>
+  </Area>
+  <Area>
+    <id>7</id>
+    <nombreArea>Montaje</nombreArea>
+  </Area>
+</list>

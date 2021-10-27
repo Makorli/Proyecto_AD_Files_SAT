@@ -45,7 +45,8 @@ public class Tecnico implements Serializable {
 
     public void setNombre(String nombre) {
         //restringimos la entrada de datos a 40 caracteres.
-        this.nombre = Utils.setStringToFixedSize(nombre.trim(),40);
+        //this.nombre = Utils.setStringToFixedSize(nombre.trim(),40);
+        this.nombre =nombre;
     }
 
     @Override

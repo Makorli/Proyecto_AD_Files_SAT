@@ -55,7 +55,8 @@ public class Incidencia implements Serializable {
 
     public void setArea(String area) {
         //Permitido máximo 15 carácteres
-        this.area = Utils.setStringToFixedSize(area.trim(),15);
+        //this.area = Utils.setStringToFixedSize(area.trim(),15);
+        this.area = area;
     }
 
 

@@ -34,6 +34,8 @@ public class Area implements Serializable {
     }
 
     public void setNombreArea(String nombreArea) {
-        this.nombreArea = Utils.setStringToFixedSize(nombreArea,15);
+
+        //this.nombreArea = Utils.setStringToFixedSize(nombreArea,15);
+        this.nombreArea = nombreArea;
     }
 }

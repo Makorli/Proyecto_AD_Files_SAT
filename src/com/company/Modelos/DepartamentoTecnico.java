@@ -4,7 +4,7 @@ import java.util.*;
 
 public class DepartamentoTecnico {
 
-    private static final Map<Integer, Tecnico> tecnicoMap = new HashMap<>();
+    private static Map<Integer, Tecnico> tecnicoMap = new HashMap<>();
 
     public DepartamentoTecnico() {
 /*
@@ -36,7 +36,7 @@ public class DepartamentoTecnico {
      * @return lista
      */
     public static List<Tecnico> getLista() {
-        return new ArrayList<Tecnico>(getMap().values());
+        return new ArrayList<>(getMap().values());
     }
 
     public static Map<Integer, Tecnico> getMap(){ return tecnicoMap; }
