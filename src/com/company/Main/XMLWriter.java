@@ -1,5 +1,6 @@
 package com.company.Main;
 
+import com.company.Controlador.*;
 import com.company.Modelos.*;
 import com.thoughtworks.xstream.XStream;
 
@@ -10,9 +11,9 @@ public class XMLWriter {
 
     public static class ExportDepartamentoTecnico {
 
-        private static String nombrefichero = "src/com/company/XMLs/Tecnicos.xml";
+        private static String nombrefichero = "src/com/company/DataXML/Tecnicos.xml";
 
-        public static void main(String[] args) throws FileNotFoundException {
+        public static void main(String[] args) {
 
             //Cargamos el fichero en memoria
             CargarFicheros_OOS.FicheroTecnicos();
@@ -21,12 +22,9 @@ public class XMLWriter {
                 //instaciamos el Xstream
                 XStream xstream = new XStream();
 
-                //Asociamos las etiquetas a las clases correspondientes.
+                //Asociamos las etiquetas a las clases /atributos  correspondientes.
                 xstream.alias("DepartamentoTecnico", DepartamentoTecnico.class);
                 xstream.alias("Tecnico", Tecnico.class);
-
-                //Eliminamos las etiquetas /atributos de la clase que no queremos que aparezcan
-                //xstream.addImplicitCollection(DepartamentoTecnico.class,"tecnicoMap");
 
 
                 System.out.format("Generando fichero %s",nombrefichero);
@@ -35,7 +33,7 @@ public class XMLWriter {
                 xstream.toXML(DepartamentoTecnico.getLista(), new FileOutputStream(nombrefichero));
 
             } catch (FileNotFoundException f){
-                System.out.println("Error E/S");
+                System.out.println("Error E/S:"+ f.getMessage());
             }
 
         }
@@ -44,9 +42,9 @@ public class XMLWriter {
 
     public static class ExportAreasEmpresa {
 
-        private static String nombrefichero = "src/com/company/XMLs/Areas.xml";
+        private static String nombrefichero = "src/com/company/DataXML/Areas.xml";
 
-        public static void main(String[] args) throws FileNotFoundException {
+        public static void main(String[] args) {
 
             //Cargamos el fichero en memoria
             CargarFicheros_OOS.FicheroAreas();
@@ -68,7 +66,7 @@ public class XMLWriter {
                 xstream.toXML(AreasEmpresa.getLista(), new FileOutputStream(nombrefichero));
 
             } catch (FileNotFoundException f){
-                System.out.println("Error E/S");
+                System.out.println("Error E/S: "+f.getMessage());
             }
 
         }
@@ -77,9 +75,9 @@ public class XMLWriter {
 
     public static class ExportTiposIncidencias {
 
-        private static String nombrefichero = "src/com/company/XMLs/TiposIncidencia.xml";
+        private static String nombrefichero = "src/com/company/DataXML/TiposIncidencia.xml";
 
-        public static void main(String[] args) throws FileNotFoundException {
+        public static void main(String[] args) {
 
             //Cargamos el fichero en memoria
             CargarFicheros_OOS.FicheroTipoIncidencias();
@@ -101,7 +99,7 @@ public class XMLWriter {
                 xstream.toXML(TiposDeIncidencias.getLista(), new FileOutputStream(nombrefichero));
 
             } catch (FileNotFoundException f){
-                System.out.println("Error E/S");
+                System.out.println("Error E/S"+f.getMessage());
             }
 
         }
@@ -110,9 +108,9 @@ public class XMLWriter {
 
     public static class ExportIncidenciasReportadas {
 
-        private static String nombrefichero = "src/com/company/XMLs/Incidencias.xml";
+        private static String nombrefichero = "src/com/company/DataXML/Incidencias.xml";
 
-        public static void main(String[] args) throws FileNotFoundException {
+        public static void main(String[] args) {
 
             //Cargamos el fichero en memoria
             CargarFicheros_OOS.FicheroIncidencias();
@@ -134,7 +132,67 @@ public class XMLWriter {
                 xstream.toXML(IncidenciasReportadas.getLista(), new FileOutputStream(nombrefichero));
 
             } catch (FileNotFoundException f){
-                System.out.println("Error E/S");
+                System.out.println("Error E/S"+f.getMessage());
+            }
+
+        }
+
+    }
+
+    public static class ExportIncidenciasPendientes {
+
+        private static String nombrefichero = "src/com/company/DataXML/IncidenciasPendientes.xml";
+
+        public static void main(String[] args) {
+
+            //Cargamos el fichero en memoria
+            CargarFicheros_OOS.FicheroIncidencias();
+
+            try{
+                //instaciamos el Xstream
+                XStream xstream = new XStream();
+
+                //Asociamos las etiquetas a las clases correspondientes.
+                xstream.alias("IncidenciasReportadas", TiposDeIncidencias.class);
+                xstream.alias("Incidencia", Incidencia.class);
+
+                System.out.format("Generando fichero %s",nombrefichero);
+
+                //Transformamos el fichero cargado en memoria
+                xstream.toXML(IncidenciasReportadas.getIncidenciasNoCerradasList(), new FileOutputStream(nombrefichero));
+
+            } catch (FileNotFoundException f){
+                System.out.println("Error E/S"+f.getMessage());
+            }
+
+        }
+
+    }
+
+    public static class ExportIncidenciasCerradas {
+
+        private static String nombrefichero = "src/com/company/DataXML/IncidenciasCerradas.xml";
+
+        public static void main(String[] args) {
+
+            //Cargamos el fichero en memoria
+            CargarFicheros_OOS.FicheroIncidencias();
+
+            try{
+                //instaciamos el Xstream
+                XStream xstream = new XStream();
+
+                //Asociamos las etiquetas a las clases correspondientes.
+                xstream.alias("IncidenciasReportadas", TiposDeIncidencias.class);
+                xstream.alias("Incidencia", Incidencia.class);
+
+                System.out.format("Generando fichero %s",nombrefichero);
+
+                //Transformamos el fichero cargado en memoria
+                xstream.toXML(IncidenciasReportadas.getIncidenciasCerradasList(), new FileOutputStream(nombrefichero));
+
+            } catch (FileNotFoundException f){
+                System.out.println("Error E/S"+f.getMessage());
             }
 
         }

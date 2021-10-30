@@ -51,7 +51,7 @@ public class Tecnico implements Serializable {
 
     @Override
     public String toString() {
-        return "Tecnico Id" + id +
+        return "Tecnico Id: " + id +
                 ", Nombre: " + nombre;
     }
 }

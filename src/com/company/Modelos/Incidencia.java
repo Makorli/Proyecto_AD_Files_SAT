@@ -18,6 +18,8 @@ public class Incidencia implements Serializable {
     private String descripcion; //Tipo de la incidencia (100 caracteres)
     private String area;        //Area que registra la incidencia (15 caracteres)
     private boolean resuelta;   //Indica si la incidencia está resuelta o no
+    private int horas;  //Indicador de horas dedicadas a la incidencia
+    private String tecnicoCierre; //tecnico que solucino la incidencia
 
     //CONSTRUCTORES
     public Incidencia() {
@@ -28,6 +30,7 @@ public class Incidencia implements Serializable {
         setDescripcion(descripcion); //Tipo de Incidencia
         setArea(area);
         this.resuelta = false;
+        this.horas=0;
     }
 
     // GETTERS Y SETTERS
@@ -68,11 +71,29 @@ public class Incidencia implements Serializable {
         this.resuelta = resuelta;
     }
 
+    public int getHoras() {
+        return horas;
+    }
+
+    public void setHoras(int horas) {
+        this.horas = horas;
+    }
+
+    public String getTecnicoCierre() {
+        return tecnicoCierre;
+    }
+
+    public void setTecnicoCierre(String tecnicoCierre) {
+        this.tecnicoCierre = tecnicoCierre;
+    }
+
     @Override
     public String toString() {
         return "Incidencia id: " + id +
                 ", descripcion: " + descripcion + '\'' +
                 ", area: " + area + '\'' +
-                ", resuelta: " + resuelta;
+                ", resuelta: " + resuelta +
+                ", Horas acumuladas: " + horas +
+                (isResuelta()?(" ,Tecnico Cierre: "+tecnicoCierre):"");
     }
 }

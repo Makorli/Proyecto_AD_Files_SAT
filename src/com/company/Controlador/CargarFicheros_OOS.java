@@ -1,10 +1,9 @@
-package com.company.Main;
+package com.company.Controlador;
 
+import com.company.Main.Visualizador;
 import com.company.Modelos.*;
 
 import java.io.*;
-import java.util.List;
-import java.util.Map;
 
 /**
  *Clase para carga de ficheros .dat en las clases de almacenamiento que contienen las listas
@@ -30,12 +29,11 @@ public class CargarFicheros_OOS {
 
 
     /**
-     * Clase de lectura y carga de datos  de un fichero a una lista con Ojetos de tipo Area
+     * Clase de lectura y carga de datos  de un fichero la clase Areas Empesa
      */
     private static class FicheroAreas{
 
         private static final String nombrefichero = "src/com/company/Data/Areas.dat";
-        private static final Map<Integer, Area> objectMap = AreasEmpresa.getMap();
 
         public static void main(String[] args) {
             //GENERAMOS EL FLUJO DE DATOS PARA LECTURA DEL FICHERO
@@ -46,17 +44,11 @@ public class CargarFicheros_OOS {
 
                 //RECORREMOS EL FICHERO Y LO CARGAMOS EN LA LISTA CORRESPONDIENTE
                 Area a = null;
+                AreasEmpresa.getMap().clear();
                 try{
-                    boolean primeravez=true;
                     while (true){
-                        if (primeravez){
-                            objectMap.clear();
-                            primeravez=false;
-                        }
                         a = (Area) objectInputStream.readObject();
-                        if (!objectMap.containsKey(a.getId())){
-                            objectMap.put(a.getId(),a);
-                        }
+                        AreasEmpresa.add(a);
                     }
                 }
                 catch(EOFException e){
@@ -78,12 +70,11 @@ public class CargarFicheros_OOS {
     }
 
     /**
-     * Clase de lectura y carga de datos  de un fichero a una lista con Ojetos de tipo Tecnico
+     * Clase de lectura y carga de datos  del fichero de tecnicos en la clase Departamento Técnico
      */
     private static class FicheroTecnicos {
 
         private static final String nombrefichero = "src/com/company/Data/Tecnicos.dat";
-        private static final Map<Integer, Tecnico> objectMap = DepartamentoTecnico.getMap();
 
         public static void main(String[] args) {
             //GENERAMOS EL FLUJO DE DATOS PARA LECTURA DEL FICHERO
@@ -94,17 +85,12 @@ public class CargarFicheros_OOS {
 
                 //RECORREMOS EL FICHERO Y LO CARGAMOS EN LA LISTA CORRESPONDIENTE
                 Tecnico a = null;
+                DepartamentoTecnico.getMap().clear();
                 try{
                     boolean primeravez=true;
                     while (true){
-                        if (primeravez){
-                            objectMap.clear();
-                            primeravez=false;
-                        }
                         a = (Tecnico) objectInputStream.readObject();
-                        if (!objectMap.containsKey(a.getId())){
-                            objectMap.put(a.getId(),a);
-                        }
+                        DepartamentoTecnico.add(a);
                     }
                 }
                 catch(EOFException e){
@@ -126,12 +112,11 @@ public class CargarFicheros_OOS {
     }
 
     /**
-     * Clase de lectura y carga de datos  de un fichero a una lista con Ojetos de tipo Incidencia
+     * Clase de lectura y carga de datos  del fichero de incidencias en la clase IncidenciasReportadas
      */
     private static class FicheroIncidencias {
 
         private static final String nombrefichero = "src/com/company/Data/Incidencias.dat";
-        private static final Map<Integer,Incidencia> objectMap = IncidenciasReportadas.getMap();
 
         public static void main(String[] args) {
             //GENERAMOS EL FLUJO DE DATOS PARA LECTURA DEL FICHERO
@@ -142,18 +127,14 @@ public class CargarFicheros_OOS {
 
                 //RECORREMOS EL FICHERO Y LO CARGAMOS EN LA LISTA CORRESPONDIENTE
                 Incidencia a = null;
+                IncidenciasReportadas.getMap().clear();
+                IncidenciasReportadas.getIncidenciasNoCerradasList().clear();
+                IncidenciasReportadas.getIncidenciasCerradasList().clear();
                 try{
-                    boolean primeravez=true;
+                    IncidenciasReportadas.getMap().clear();
                     while (true){
-                        if (primeravez){
-                            objectMap.clear();
-                            //listaDeCarga.clear();
-                            primeravez=false;
-                        }
                         a = (Incidencia) objectInputStream.readObject();
-                        if (!objectMap.containsKey(a.getId())){
-                            objectMap.put(a.getId(),a);
-                        }
+                        IncidenciasReportadas.add(a);
                     }
                 }
                 catch(EOFException e){
@@ -175,12 +156,11 @@ public class CargarFicheros_OOS {
     }
 
     /**
-     * Clase de lectura y carga de datos  de un fichero a una lista con Ojetos de tipo Trabajo 
+     * Clase de lectura y carga de datos  del fichero de trabajos en la clase de trabajosREalizados
      */
     private static class FicheroTrabajos {
 
         private static final String nombrefichero = "src/com/company/Data/Trabajos.dat";
-        private static final List<Trabajo> listaDeCarga= TrabajosRealizados.getLista();
 
         public static void main(String[] args) {
             //GENERAMOS EL FLUJO DE DATOS PARA LECTURA DEL FICHERO
@@ -191,10 +171,11 @@ public class CargarFicheros_OOS {
 
                 //RECORREMOS EL FICHERO Y LO CARGAMOS EN LA LISTA CORRESPONDIENTE
                 Trabajo a = null;
+                TrabajosRealizados.getLista().clear();
                 try{
                     while (true){
                         a = (Trabajo) objectInputStream.readObject();
-                        listaDeCarga.add(a);
+                        TrabajosRealizados.add(a);
                     }
                 }
                 catch(EOFException e){  }  //Salimos del bucle de lectura.
@@ -214,12 +195,11 @@ public class CargarFicheros_OOS {
     }
 
     /**
-     * Clase de lectura y carga de datos de un fichero a una lista
+     * Clase de lectura y carga de datos del ficheto de TiposDeIncidencia a la calse TiposDeIncidencia
      */
     private static class FicheroTipoIncidencias {
 
         private static final String nombrefichero = "src/com/company/Data/TiposDeIncidencia.dat";
-        private static final List<String> listaDeCarga= new TiposDeIncidencias().getLista();
 
         public static void main(String[] args) {
             //GENERAMOS EL FLUJO DE DATOS PARA LECTURA DEL FICHERO
@@ -230,10 +210,11 @@ public class CargarFicheros_OOS {
 
                 //RECORREMOS EL FICHERO Y LO CARGAMOS EN LA LISTA CORRESPONDIENTE
                 String a = null;
+                TiposDeIncidencias.getLista().clear();
                 try{
                     while (true){
                         a = (String) objectInputStream.readObject();
-                        listaDeCarga.add(a);
+                        TiposDeIncidencias.add(a);
                     }
                 }
                 catch(EOFException e){

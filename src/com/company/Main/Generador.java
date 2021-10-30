@@ -1,22 +1,24 @@
 package com.company.Main;
 
-import com.company.Miscelaneous.Utils;
+import com.company.Controlador.*;
 import com.company.Modelos.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Generador {
 
     public static void NuevasIncidencias(int nIncidencias) {
-        Generador.NuevasIncidencias.main(new String[] {String.valueOf(nIncidencias)});
+        Generador.NuevasIncidencias.main(new String[]{String.valueOf(nIncidencias)});
     }
 
     public static void AtenderIncidencias(int nTrabajos) {
-        Generador.AtenderIncidencias.main(new String[] {String.valueOf(nTrabajos)});
+        Generador.AtenderIncidencias.main(new String[]{String.valueOf(nTrabajos)});
+    }
+
+    public static void DatosParaPruebas() {
+        Generador.DatosParaPruebas.main(new String[]{});
     }
 
     /**
@@ -27,12 +29,13 @@ public class Generador {
 
         public static void main(String[] args) {
 
-            int nIncidenciasNuevas;
+            int nIncidenciasNuevas=0; // -1 aleatorio
 
-            if (args.length == 0){
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                nIncidenciasNuevas =10;
-            } else nIncidenciasNuevas= (Integer.parseInt(args[0]));
+            if (args.length != 0 ) {
+                nIncidenciasNuevas = (Integer.parseInt(args[0]));
+                if (nIncidenciasNuevas < 0)
+                    nIncidenciasNuevas = new Random().nextInt(14)+1;
+            }
 
             //COMPROBAMOS QUE TENEMOS LOS DATOS NECESARIOS PARA GENERAR LAS INCIDENCIAS ALEATORIAMENTE
             //SI NO LOS TENEMOS EN MEMORIA LO CARGAMOS DE LOS FICHEROS Y SI NO HAY DATOS DEVOLVEMOS ERROR
@@ -56,11 +59,15 @@ public class Generador {
             //Si TENEMOS LOS DATOS MINIMOS PARA GENERAR INCIDENCIAS ALEATORIAMENTE, NOS PONEMOS A ELLO
 
             if (check1Ok && check2Ok) {
+
+                //CARgamos las incidencias existentes. Si las hay..
+                CargarFicheros_OOS.FicheroIncidencias();
+
                 Random rnd = new Random(); //generador de aleatorios
                 int incIdxSel;
                 int areaIdxSel;
 
-                System.out.format("\nReportando nuevas %d incidencias\n",nIncidenciasNuevas);
+                System.out.format("\nReportando %d incidencias nuevas\n\n", nIncidenciasNuevas);
 
                 for (int i = 0; i < nIncidenciasNuevas; i++) {
                     incIdxSel = rnd.nextInt(TiposDeIncidencias.getLista().size()); //Tipo de incidencia
@@ -99,20 +106,20 @@ public class Generador {
     private static class AtenderIncidencias {
 
         //Generador aleatorio de trabajos y atencion de incidencias abiertas.
-        public static void main (String[] args) {
+        public static void main(String[] args) {
 
-            int nTrabajos;
+            int nTrabajosMax;
+            int nTrabajos=0;
 
-            if (args.length == 0){
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                nTrabajos =10;
-            } else nTrabajos= (Integer.parseInt(args[0]));
+            if (args.length != 0 ) {
+                nTrabajos = (Integer.parseInt(args[0]));
+            }
+
 
             //COMPROBAMOS QUE TENEMOS LOS DATOS NECESARIOS PARA ATENDER LAS INCIDENCIAS ALEATORIAMENTE
             //SI NO LOS TENEMOS EN MEMORIA LO CARGAMOS DE LOS FICHEROS Y SI NO HAY DATOS DEVOLVEMOS ERROR
 
-            List<Trabajo> nuevosTrabajos = new ArrayList<>();
-            List<Incidencia> incidenciasCerradas = new ArrayList<>();
+            //Comprobacion incidencias
 
             // Comprobacion Tecnicos
             boolean check1Ok = false;
@@ -130,81 +137,150 @@ public class Generador {
                 if (IncidenciasReportadas.getLista().size() > 0) check2Ok = true;
             } else check2Ok = true;
 
+
             //Si TENEMOS LOS DATOS MINIMOS PARA GENERAR TRABAJOS ALEATORIAMENTE, NOS PONEMOS A ELLO
 
             if (check1Ok && check2Ok) {
+
+                //calculamos el número máximo de trabajos que se pueden atender en comparación con los
+                // por el parametro nTRabajos
+                //variables para el MAXIMO son  El numero de tecnicos y el numero de incidencias no cerradas
+                //o el numero de técnicos por 2
+                int capMax = DepartamentoTecnico.getLista().size()+2;
+                nTrabajosMax = IncidenciasReportadas.getIncidenciasNoCerradasList().size();
+                if (capMax< nTrabajosMax) nTrabajosMax=capMax;
+
+                CargarFicheros_OOS.FicheroTrabajos();
+
                 Random rnd = new Random(); //generador de aleatorios
-                int maxHoras =4; //el maximo de horas que un técnico puede dedicar a una incidencia en un día
+                int maxHoras = 4; //el maximo de horas que un técnico puede dedicar a una incidencia en un día
                 int incSelIdx;  //Id de incidencia aleatoria
                 int tecSelIdx;  //Id de tecnico aleatorio
 
-                System.out.format("\nAtendiendo %d incidencias\n",nTrabajos);
+                if (IncidenciasReportadas.getIncidenciasNoCerradasList().size()==0)
+                    System.out.println("No hay incidencias reportadas pendientes de atender.");
+                else {
+                    //A ver cuanto trabajamos hoy....(mínimo una incidencia)
+                    if (nTrabajos < 0) nTrabajos= new Random().nextInt(nTrabajosMax-1)+1;
 
-                for (int i = 0; i < nTrabajos; i++) {
+                    System.out.format("\nAtendiendo %d incidencias\n", nTrabajos);
 
-                    incSelIdx = rnd.nextInt(IncidenciasReportadas.getLista().size()); //Incidencia
-                    tecSelIdx = rnd.nextInt(DepartamentoTecnico.getLista().size()); // Tecnico que atiende la incidencia.
+                    for (int i = 0; i < nTrabajos; i++) {
 
-                    //GENERAMOS EL TRABAJO CON LOS DATOS ALEATORIOS Y LA GUARDAMOS EN LA LISTA DE TRABAJOS
-                    Incidencia incidenciaSel = IncidenciasReportadas.getLista().get(incSelIdx);
+                        //Seleccionamos una incidencia no cerrada sobre la que trabajar
+                        incSelIdx = rnd.nextInt(IncidenciasReportadas.getIncidenciasNoCerradasList().size());
+                        tecSelIdx = rnd.nextInt(DepartamentoTecnico.getLista().size()); // Tecnico que atiende la incidencia.
+                        Incidencia incidenciaSel = IncidenciasReportadas.getIncidenciasNoCerradasList().get(incSelIdx);
 
-                    //Si la incidencia elegida está resuelta, elegimos otra.
-                    while (incidenciaSel.isResuelta()){
-                        incSelIdx = rnd.nextInt(IncidenciasReportadas.getLista().size());
-                        incidenciaSel = IncidenciasReportadas.getLista().get(incSelIdx);
-                    }
+                        //Seleccionamos el tñecnico que trabajaará la incidencia
+                        Tecnico tecnicoSel = DepartamentoTecnico.getLista().get(tecSelIdx);
 
-                    Tecnico tecnicoSel = DepartamentoTecnico.getLista().get(tecSelIdx);
-                    int horas = rnd.nextInt(maxHoras-1)+1;
+                        //GENERAMOS EL TRABAJO CON LOS DATOS ALEATORIOS Y LA GUARDAMOS EN LA LISTA DE TRABAJOS
 
-                    //Montamos el trabajo
-                    Trabajo nuevoTrabajo = new Trabajo(
-                            incidenciaSel.getId(),
-                            tecnicoSel.getId(),
-                            horas
-                    );
+                        //Preguntamos el numero de horas trabajadas en la incidencia
+                        int horas = rnd.nextInt(maxHoras - 1) + 1;
 
-                    //Mostramos el trabajo en pantalla
-                    System.out.format("%s\n\tTecnico: %s\n\tHoras: %d\n",
-                            incidenciaSel,
-                            tecnicoSel,
-                            horas);
+                        //Montamos el trabajo
+                        Trabajo nuevoTrabajo = new Trabajo(
+                                incidenciaSel.getId(),
+                                tecnicoSel.getId(),
+                                horas
+                        );
 
-                    //Añadimos el trabajo a la lista de nuevosTrabajos
-                    nuevosTrabajos.add(nuevoTrabajo);
-
-
-                    //Preguntamos si el tecnico a terminado la incidencia y
-                    // si esta resuelta actualizamos la incidencia y
-                    //la añadimos a la lista de incidencias cerradas
-                    boolean resuelta = rnd.nextBoolean();
-
-
-                    if (incidenciaSel.isResuelta())
                         //actualizamos la incidencia
-                        incidenciaSel.setResuelta(resuelta);
-                        incidenciasCerradas.add(incidenciaSel);
 
-                }
+                        //sumamos las horas
+                        incidenciaSel.setHoras(incidenciaSel.getHoras() + nuevoTrabajo.getHoras());
 
-                //FIN DE LOS TRABAJOS
+                        //Preguntamos si el tecnico a terminado la incidencia y
+                        // si esta resuelta actualizamos la incidencia y
+                        //la añadimos a la lista de incidencias cerradas
+                        boolean resuelta = rnd.nextBoolean();
+                        if (resuelta) {
+                            incidenciaSel.setResuelta(resuelta);
+                            incidenciaSel.setTecnicoCierre(tecnicoSel.getNombre());
+                            IncidenciasReportadas.getIncidenciasCerradasList().add(incidenciaSel);
+                            IncidenciasReportadas.getIncidenciasNoCerradasList().remove(incidenciaSel);
+                        }
 
-                //Añadimos los trabajos realizados y guardamos el fichero.
-                CargarFicheros_OOS.FicheroTrabajos();
-                for (Trabajo t: nuevosTrabajos) {
-                    TrabajosRealizados.add(t);
-                }
-                EscribirFicheros_OOS.FicheroTrabajos();
+                        //Guardamos la incidencia ya modificada en memoria
+                        IncidenciasReportadas.getMap().put(incidenciaSel.getId(), incidenciaSel);
 
-                //Si se han cerrado incidencias cerradas actualizamos el fichero
-                if (incidenciasCerradas.size()>0) {
+
+                        //Mostramos los datos del trabajo en pantalla
+                        System.out.format("%s\n\tTecnico: %s\n\tHoras: %d\n",
+                                incidenciaSel.isResuelta() ? incidenciaSel + " * * *" : incidenciaSel,
+                                tecnicoSel,
+                                horas);
+
+                        //Añadimos el trabajo a la lista de nuevosTrabajos
+                        TrabajosRealizados.add(nuevoTrabajo);
+
+                    }
+                    //FIN DE LOS TRABAJOS
+
+                    EscribirFicheros_OOS.FicheroTrabajos();
                     EscribirFicheros_OOS.FicheroIncidencias();
+                    EscribirFicheros_OOS.FicheroTrabajos();
                 }
 
-            } else System.out.println("Imposible atender incidencias, problemas con los ficheros.");
+            } else System.out.println("Imposible atender incidencias, problemas con los ficheros o ausencia de datos necsarios en los mismos");
 
         }
 
+    }
 
+    /**
+     * Clase que resetea o restaura un conjunto de datos de prueba en los ficheros
+     * para el uso del proyecto.
+     * Los ficheros serán borrados.
+     */
+    private static class DatosParaPruebas {
+
+        public static void main(String[] args) {
+
+            // DEPARTAMENTO TECNICO
+            System.out.println("Eliminando lista actual de tecnicos...");
+            DepartamentoTecnico.getMap().clear();
+
+            System.out.println("Creacion de Tecnicos...");
+            String[] nombres = {"Juanjo", "Karmen", "Blanca", "Dominique", "Mikel", "Gorka", "Nuria"};
+            for (int i = 0; i < nombres.length; i++) {
+                DepartamentoTecnico.add(new Tecnico(i, nombres[i]));
+                System.out.println(nombres[i]);
+            }
+            System.out.println("Guardando fichero ...");
+            EscribirFicheros_OOS.FicheroTecnicos();
+            System.out.println();
+
+            // FICHERO TIPOS DE INCIDENCIA
+            System.out.println("Eliminando lista actual de Tipos de incidencias...");
+            TiposDeIncidencias.getLista().clear();
+
+            System.out.println("Creacion de Tipos de Incidencia...");
+            String[] tipos = {"Problema Hardware", "Error de acceso", "Problema de SW", "Error página Web",
+                    "Error certificados", "Fallo metodología", "Problema red", "Usuario problematico"};
+            for (int i = 0; i < tipos.length; i++) {
+                TiposDeIncidencias.add(tipos[i]);
+                System.out.println(tipos[i]);
+            }
+            System.out.println("Guardando fichero ...");
+            EscribirFicheros_OOS.FicheroTipoIncidencias();
+            System.out.println();
+
+            //  AREAS DE EMPRESA
+            System.out.println("Eliminando lista actual de Areas de Empresa...");
+            AreasEmpresa.getMap().clear();
+
+            System.out.println("Creacion de Areas de Empresa...");
+            String[] areas = {"Ingeniería", "Taller", "Compras", "RRHH", "Administración", "TICS", "Montaje"};
+            for (int i = 0; i < areas.length; i++) {
+                AreasEmpresa.add(new Area(i, areas[i]));
+                System.out.println(areas[i]);
+            }
+            System.out.println("Guardando fichero ...");
+            EscribirFicheros_OOS.FicheroAreas();
+
+        }
     }
 }

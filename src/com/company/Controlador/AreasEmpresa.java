@@ -1,4 +1,6 @@
-package com.company.Modelos;
+package com.company.Controlador;
+
+import com.company.Modelos.Area;
 
 import java.util.*;
 
@@ -6,26 +8,9 @@ import java.util.*;
 //El area no debe ser mayor que 15 caracteres.
 public class AreasEmpresa {
 
-    private static final Map<Integer,Area> areaMap= new HashMap<>();
+    private static final Map<Integer, Area> areaMap= new HashMap<>();
 
-    public AreasEmpresa() {
-
-        Area a1 = new Area(1,"Ingeniería");
-        Area a2 = new Area(2,"Taller");
-        Area a3 = new Area(3,"Compras");
-        Area a4 = new Area(4,"RRHH");
-        Area a5 = new Area(5,"Administración");
-        Area a6 = new Area(6,"TICS");
-        Area a7 = new Area(7,"Montaje");
-        add(a1);
-        add(a2);
-        add(a3);
-        add(a4);
-        add(a5);
-        add(a6);
-        add(a7);
-
-    }
+    public AreasEmpresa() { }
 
     public static void add(Area obj) {
         if (!getMap().containsKey(obj.getId())){
@@ -34,10 +19,15 @@ public class AreasEmpresa {
     }
 
     public static List<Area> getLista() {
-        return new ArrayList<Area>(getMap().values());
+        return new ArrayList<>(getMap().values());
     }
 
     public static Map<Integer,Area> getMap() {return areaMap;}
+
+    public static void visualizarAreas(){
+        for (Area a: getLista())
+            System.out.println(a);
+    }
 
     /**
      * Proporciona una Key valida para almacenar en el dicccionario (Id)

@@ -1,9 +1,8 @@
-package com.company.Main;
+package com.company.Controlador;
 
 import com.company.Modelos.*;
 
 import java.io.*;
-import java.util.List;
 
 /**
  *Clase para generacion de ficheros .dat de los modelos.
@@ -33,12 +32,11 @@ public class EscribirFicheros_OOS {
     //INNER CLASSES
 
     /**
-     * Clase de ecritura de datos de tipo Area en un fichero
+     * Clase de ecritura de la clase AreasEmpresa en el fichero e areas
      */
     private static class FicheroAreas {
 
         private static final String nombrefichero = "src/com/company/Data/Areas.dat";
-        private static final List<Area> listaDeCarga= AreasEmpresa.getLista();
 
         public static void main(String[] args) {
             //GENERAMOS EL FLUJO DE DATOS PARA ESCRITURA EN EL FICHERO
@@ -48,7 +46,7 @@ public class EscribirFicheros_OOS {
                 objectOutputStream = new ObjectOutputStream(new FileOutputStream(nombrefichero));
 
                 //RECORREMOS LA LISTA
-                for (Area a : listaDeCarga) {
+                for (Area a : AreasEmpresa.getLista()) {
                     objectOutputStream.writeObject(a);
                 }
                 //CERRAMOS FICHERO
@@ -63,12 +61,11 @@ public class EscribirFicheros_OOS {
     }
 
     /**
-     * Clase de ecritura de datos de tipo Tecnico en un fichero
+     * Clase de ecritura de datos la clase Departamento Técnico en el fichero de tecnicos
      */
     private static class FicheroTecnicos {
 
         private static final String nombrefichero = "src/com/company/Data/Tecnicos.dat";
-        private static final List<Tecnico> listaDeCarga= DepartamentoTecnico.getLista();
 
         public static void main(String[] args) {
 
@@ -79,7 +76,7 @@ public class EscribirFicheros_OOS {
                 objectOutputStream = new ObjectOutputStream(new FileOutputStream(nombrefichero));
 
                 //RECORREMOS LA LISTA
-                for (Tecnico a : listaDeCarga) {
+                for (Tecnico a : DepartamentoTecnico.getLista()) {
                     objectOutputStream.writeObject(a);
                 }
                 //CERRAMOS FICHERO
@@ -94,12 +91,11 @@ public class EscribirFicheros_OOS {
     }
 
     /**
-     * Clase de ecritura de datos de tipo Incidencia en un fichero
+     * Clase de ecritura de datos de la clase IncidenciasRepotadas en el fichero Incidencias
      */
     private static class FicheroIncidencias {
 
         private static final String nombrefichero = "src/com/company/Data/Incidencias.dat";
-        private static final List<Incidencia> listaDeCarga= IncidenciasReportadas.getLista();
 
         public static void main(String[] args) {
             //GENERAMOS EL FLUJO DE DATOS PARA ESCRITURA EN EL FICHERO
@@ -109,7 +105,7 @@ public class EscribirFicheros_OOS {
                 objectOutputStream = new ObjectOutputStream(new FileOutputStream(nombrefichero));
 
                 //RECORREMOS LA LISTA
-                for (Incidencia a : listaDeCarga) {
+                for (Incidencia a : IncidenciasReportadas.getLista()) {
                     objectOutputStream.writeObject(a);
                 }
                 //CERRAMOS FICHERO
@@ -124,12 +120,11 @@ public class EscribirFicheros_OOS {
     }
 
     /**
-     * Clase de ecritura de datos de tipo Trabajo en un fichero
+     * Clase de ecritura de datos de la clase TRabajosRealizados en el fichero trabajos
      */
     private static class FicheroTrabajos {
 
         private static final String nombrefichero = "src/com/company/Data/Trabajos.dat";
-        private static final List<Trabajo> listaDeCarga= TrabajosRealizados.getLista();
 
         public static void main(String[] args) {
             //GENERAMOS EL FLUJO DE DATOS PARA ESCRITURA EN EL FICHERO
@@ -139,7 +134,7 @@ public class EscribirFicheros_OOS {
                 objectOutputStream = new ObjectOutputStream(new FileOutputStream(nombrefichero));
 
                 //RECORREMOS LA LISTA
-                for (Trabajo a : listaDeCarga) {
+                for (Trabajo a : TrabajosRealizados.getLista()) {
                     objectOutputStream.writeObject(a);
                 }
                 //CERRAMOS FICHERO
@@ -154,12 +149,11 @@ public class EscribirFicheros_OOS {
     }
 
     /**
-     * Clase de ecritura de datos de tipo Trabajo en un fichero
+     * Clase de ecritura de datos de la clase TiposDeIncidencia en el fichero Tipos de Incidencia
      */
     private static class FicheroTipoIncidencias {
 
         private static final String nombrefichero = "src/com/company/Data/TiposDeIncidencia.dat";
-        private static final List<String> listaDeCarga= TiposDeIncidencias.getLista();
 
         public static void main(String[] args) {
             //GENERAMOS EL FLUJO DE DATOS PARA ESCRITURA EN EL FICHERO
@@ -169,7 +163,7 @@ public class EscribirFicheros_OOS {
                 objectOutputStream = new ObjectOutputStream(new FileOutputStream(nombrefichero));
 
                 //RECORREMOS LA LISTA
-                for (String a : listaDeCarga) {
+                for (String a : TiposDeIncidencias.getLista()) {
                     objectOutputStream.writeObject(a);
                 }
                 //CERRAMOS FICHERO

@@ -38,4 +38,10 @@ public class Area implements Serializable {
         //this.nombreArea = Utils.setStringToFixedSize(nombreArea,15);
         this.nombreArea = nombreArea;
     }
+
+    @Override
+    public String toString() {
+        return "Area Id: " + id +
+                ", Nombre: " + nombreArea;
+    }
 }
