@@ -1,6 +1,5 @@
 package com.company.Controlador;
 
-import com.company.Main.Visualizador;
 import com.company.Modelos.*;
 
 import java.io.*;

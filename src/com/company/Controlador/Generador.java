@@ -1,10 +1,7 @@
-package com.company.Main;
+package com.company.Controlador;
 
-import com.company.Controlador.*;
 import com.company.Modelos.*;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Random;
 
 public class Generador {

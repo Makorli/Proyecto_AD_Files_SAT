@@ -1,4 +1,4 @@
-package com.company.Main;
+package com.company.Controlador;
 
 import com.company.Controlador.*;
 

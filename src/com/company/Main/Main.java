@@ -1,5 +1,9 @@
 package com.company.Main;
 
+import com.company.Controlador.Generador;
+import com.company.Controlador.Visualizador;
+import com.company.Controlador.XMLWriter;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
